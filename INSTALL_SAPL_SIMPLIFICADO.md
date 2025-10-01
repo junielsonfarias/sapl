@@ -44,7 +44,10 @@ chmod +x instal_sapl.sh
 ### 4. Execute o script como root
 
 
+
 ```bash
+mv instal_sapl.sh /opt/
+cd /opt
 sudo ./instal_sapl.sh
 ```
 
