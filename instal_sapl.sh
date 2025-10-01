@@ -46,7 +46,9 @@ if [ -d "/opt/sapl" ]; then
     exit 1
   fi
 fi
-# Remove banco de dados
+# Finaliza conexões e remove banco de dados
+echo "Finalizando conexões do banco sapl_db, se existirem..."
+sudo -u postgres psql -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname='sapl_db';" || true
 sudo -u postgres psql -c "DROP DATABASE IF EXISTS sapl_db;" || { echo "ERRO: Não foi possível remover o banco sapl_db. Saindo."; exit 1; }
 # Remove usuário do banco
 sudo -u postgres psql -c "DROP USER IF EXISTS sapl_user;" || { echo "ERRO: Não foi possível remover o usuário sapl_user. Saindo."; exit 1; }
