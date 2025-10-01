@@ -36,14 +36,11 @@ source venv/bin/activate
 pip install --upgrade pip
 echo "==== Instalação do SAPL ===="
 
-# Pergunta se é uma instalação nova
-read -p "Esta é uma instalação nova? (s/n): " INST_NOVA
-if [[ "$INST_NOVA" =~ ^[sS]$ ]]; then
-  echo "Removendo instalação anterior (se existir)..."
-  rm -rf /opt/sapl
-  sudo -u postgres dropdb --if-exists sapl_db
-  sudo -u postgres dropuser --if-exists sapl_user
-fi
+# Remove instalação anterior automaticamente
+echo "Removendo instalação anterior (se existir)..."
+rm -rf /opt/sapl
+sudo -u postgres dropdb --if-exists sapl_db
+sudo -u postgres dropuser --if-exists sapl_user
 pip install -r requirements.txt
 
 # 8. Configura variáveis de ambiente
