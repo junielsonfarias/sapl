@@ -38,9 +38,11 @@ echo "==== Instalação do SAPL ===="
 
 # Remove instalação anterior automaticamente
 echo "Removendo instalação anterior (se existir)..."
-rm -rf /opt/sapl
-sudo -u postgres dropdb --if-exists sapl_db
-sudo -u postgres dropuser --if-exists sapl_user
+if [ -d "/opt/sapl" ]; then
+  rm -rf /opt/sapl || { echo "Não foi possível remover /opt/sapl. Saindo."; exit 1; }
+fi
+sudo -u postgres dropdb --if-exists sapl_db 2>/dev/null || true
+sudo -u postgres dropuser --if-exists sapl_user 2>/dev/null || true
 pip install -r requirements.txt
 
 # 8. Configura variáveis de ambiente
